@@ -15,6 +15,30 @@
 #
 def triangle(a, b, c)
   # WRITE THIS CODE
+  if a == 0 || b == 0 || c == 0
+  	raise TriangleError.new("This is not a triangle if one or more of the sides equals 0")
+  end
+
+  if a < 0 || b < 0 || c < 0
+  	raise TriangleError.new("This is not a triangle if one or more of the sides are negative")
+  end
+
+  sumAB = a + b
+  sumBC = b + c
+  sumCA = c + a
+  if !( sumAB > c ) || !( sumBC > a) || !( sumCA > b)
+  	raise TriangleError.new("This is not a triangle if any two sides add up to be less than the thrid side")
+  end
+
+  if a == b && b == c
+  	return :equilateral
+  end
+
+  if a != b && b != c && c != a
+  	return :scalene
+  end
+
+  return :isosceles
 end
 
 # Error class used in part 2.  No need to change this code.
