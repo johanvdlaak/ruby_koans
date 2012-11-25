@@ -31,6 +31,39 @@ require File.expand_path(File.dirname(__FILE__) + '/edgecase')
 
 def score(dice)
   # You need to write this method
+  score = 0
+
+  # count how often each eye-value was rolled
+  eye_counts = Hash.new(0)
+  dice.each { |eye_value| eye_counts[eye_value] = eye_counts[eye_value] + 1 }
+
+  # determine the eye_value that made a set
+  set = nil
+  eye_counts.each { |eye_value, count| set = eye_value if count >= 3 }
+
+
+  if set != nil
+    # we have a set so count it
+    if set == 1
+      score += 1000 
+    else
+      score += (100 * set)
+    end
+
+    # remove the set from the array
+    (1..3).each { |i| dice.delete_at( dice.find_index(set) ) }
+  end
+
+  # count the remaining points
+  dice.each { |eye_value|
+    if eye_value == 1
+      score += 100
+    elsif eye_value == 5
+      score += 50
+    end
+  }
+
+  return score
 end
 
 class AboutScoringProject < EdgeCase::Koan
