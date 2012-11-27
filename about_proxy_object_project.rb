@@ -28,8 +28,14 @@ class Proxy
     @object.__send__(method_name, *args, &block)
   end
 
-  def called?
-    
+  def called?(method_name)
+    #called = @messages.select { |item| method_name == item }
+    number_of_times_called(method_name) > 0
+  end
+
+  def number_of_times_called(method_name)
+    called = @messages.select { |item| method_name == item }
+    called.size
   end
 end
 
